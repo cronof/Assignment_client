@@ -1,0 +1,232 @@
+
+
+section {
+    margin-right: 1%;
+}
+
+.title{
+    color: #f35626;
+    background-image: -webkit-linear-gradient(92deg,#f35626,#feab3a);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    -webkit-animation: hue 10s infinite linear;
+}
+@-webkit-keyframes hue {
+  from {
+    -webkit-filter: hue-rotate(0deg);
+  }
+
+  to {
+    -webkit-filter: hue-rotate(-360deg);
+  }
+}
+
+body {
+  background: url(http://student.coe.phuket.psu.ac.th/~s5635512088/images/bg1.jpg) #f4f4f4 top center no-repeat fixed;
+  margin-left: 0px;
+  margin-top: 0px;
+  margin-right: 0px;
+  margin-bottom: 0px;
+  background-size: cover;
+  overflow: hidden;
+  font: 100%/1.5 "Roboto", Verdana, sans-serif;
+  font-size: 15px;
+  cursor: url(http://cur.cursors-4u.net/cursors/cur-11/cur1054.cur), progress !important;
+}
+
+h1, .alpha {
+  margin-bottom: 1.0rem;
+
+  font-size: 3rem;
+  font-weight: 100;
+  line-height: 1.5;
+  letter-spacing: -.05em;
+}
+h2, .beta {
+  margin-bottom: .75rem;
+
+  font-weight: 400;
+  font-size: 1.5rem;
+  line-height: 1;
+}
+
+
+.dece {
+    font-color: #2F4F4F;
+    top: 0;
+    font-family: Imprint MT Shadow;
+    font-size: 8rem;
+    line-height: 1.5;
+
+}
+
+@media (min-width: 650px) {
+  .mega {
+    font-family: Imprint MT Shadow;
+    font-size: 6rem;
+    line-height: 1.5;
+  }
+}
+
+
+#top, #bottom{
+position: absolute;
+top: 0; 
+left: 1130px; 
+right: 150px; 
+width: auto;
+height: 120px; 
+overflow: hidden;
+}
+
+.link {
+  border-bottom: 0px dotted #55acee;
+  text-decoration: none;
+  color: #8B008B;
+  transition: .3s;
+  -webkit-transition: .3s;
+  -moz-transition: .3s;
+  -o-transition: .3s;
+  cursor: url(http://cur.cursors-4u.net/cursors/cur-11/cur1049.cur), progress !important;
+}
+
+.link:hover {
+  color: #2ecc71;
+  border-bottom: 0px dotted #2ecc71;
+
+}
+/*cursor: url(http://cur.cursors-4u.net/cursors/cur-11/cur1053.ani),url(http://cur.cursors-4u.net/cursors/cur-11/cur1053.png), progress !important;
+*/
+/* css for the shiny buttons */
+.bttn {
+  cursor: pointer;
+  margin: 10px;
+  border-radius: 5px;
+  text-decoration: none;
+  padding: 10px;
+  font-size: 22px;
+  transition: .3s;
+  -webkit-transition: .3s;
+  -moz-transition: .3s;
+  -o-transition: .3s;
+  display: inline-block;
+}
+
+.red {
+  color: #e74c3c;
+  border: 2px #e74c3c solid;
+}
+
+.red:hover {
+  color: #fff;
+  background-color: #e74c3c;
+}
+
+glow{
+       top: 0; 
+  font-size:20px;
+  color:#BDBDBD;
+}
+
+
+  @-webkit-keyframes redPulse {
+    from { background-color: #F62217; -webkit-box-shadow: 0 0 9px #333; }
+    50% { background-color: #DC381F; -webkit-box-shadow: 0 0 23px #F62217; }
+    to { background-color: #F62217; -webkit-box-shadow: 0 0 9px #333; }
+  }
+a.button {
+    -webkit-animation-duration: 2s;
+    -webkit-animation-iteration-count: infinite; 
+  }
+  
+.redz.button { -webkit-animation-name: redPulse; -webkit-animation-duration: 4s; }
+
+
+.floating{
+  animation-name: floating;
+  -webkit-animation-name: floating;
+
+  animation-duration: 2s; 
+  -webkit-animation-duration: 2s;
+
+  animation-iteration-count: infinite;
+  -webkit-animation-iteration-count: infinite;
+}
+
+@keyframes floating {
+  0% {
+    transform: translateY(0%);  
+  }
+  50% {
+    transform: translateY(4%);  
+  } 
+  100% {
+    transform: translateY(0%);
+  }     
+}
+
+@-webkit-keyframes floating {
+  0% {
+    -webkit-transform: translateY(0%);  
+  }
+  50% {
+    -webkit-transform: translateY(4%);  
+  } 
+  100% {
+    -webkit-transform: translateY(0%);
+  }     
+}
+
+#footer{
+position: absolute;
+top: 500; 
+width: auto;
+}
+
+
+#example1 {
+    border: 10px dotted black;
+    padding: 35px;
+    background: yellow;
+}
+
+#example2 {
+    border: 10px dotted black;
+    padding: 35px;
+    background: yellow;
+    background-clip: padding-box;
+}
+
+#example3 {
+    border: 10px dotted black;
+    padding: 35px;
+    background: yellow;
+    background-clip: content-box;
+}
+
+
+.container {
+  width:100%;
+  height:100px; /* ต้องกำหนดความสูงให้คงที่ */
+
+  border:1px solid red; /* กำหนดกรอบให้เห็นภาพ */
+  position:relative; /* กำหนดให้เป็น container */
+}
+.bottom {
+  position:absolute; /* ตำแหน่งเทียบกับ container */
+  bottom:0; /* กำหนดให้ชิดด้านล่าง */
+  
+  text-align:center; /* 2 บรรทัดนี้ถ้าต้องการให้ข้อความอยู่กลาง */
+  width:100%;
+
+  border:1px solid green; /* กำหนดกรอบให้เห็นภาพ */
+}
+
+
+/*
+Front
+Colonna MT
+Elephant
+Imprint MT Shadow
+
+*/

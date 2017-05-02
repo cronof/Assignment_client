@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>SHOOTING Club</title>
+    <link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.min.css">
+    <script src="angular.min.js"></script>
+    <script src="angular-resource.min.js"></script>
+</head>
+<body ng-app="ShootingApp">
+<header class="navbar navbar-default" role="banner">
+	<div class="container" color="#FFFFFF">
+		<a href="home.html" class="navbar-brand">Home</a>
+		    <ul class="nav navbar-nav navbar-left">
+		    	<li><a href="book.html">Book-Field</a></li> 
+		    	<li><a href="store.html">Storage</a></li>
+			</ul>
+		    <ul class="nav navbar-nav navbar-right">        
+		    	<li><a href="https://www.facebook.com/CRonof">Profile</a></li>
+		  	</ul>
+	</div>
+</header>
+	<div ng-controller="MainController">
+		<div class="container">
+			<div class="row">
+				<div class="jumbotron">
+					<h1>GUN-Storage ~>></h1>
+					
+				</div>
+				<table class="table table-striped">
+
+					<thead>
+						<tr> <!-- table row -->
+							<th></th><!-- table headder -->
+							<th>Orders</th>
+							<th>Price</th>
+							<th>Owner</th>
+						</tr>
+					</thead>
+
+					<tbody>
+						<tr ng-repeat="order in orders" ng-if="!isEmpty(order)">
+							<td>{{ $index+1 }}</td>
+							<td>{{ order.name }}</td>
+							<td>{{ order.price }}</td>
+							<td>{{ order.owner }}</td>
+							<td><button onclick="window.location.href='neworder.html'" class="btn btn-success">Data</button>
+								<button ng-click="edit(order.id)" class="btn btn-primary">Edit</button>
+								<button ng-click="delete(order.id)" class="btn btn-danger">Delete</button></td>
+						</tr>
+					</tbody>
+
+				</table>
+
+				<hr>
+				<div class="col col-md-6">
+					<h2>New Order</h2>
+						<form>
+			  		    	<div class="form-group">
+								<label for="">Order</label>
+					    		<input type="hidden" class="form-control" ng-model="idx">
+					    		<input type="text" class="form-control" placeholder="Order" ng-model="order.name" ng-init="order.name=''">
+							</div>
+			  		    	<div class="form-group">
+								<label for="">Price</label>
+					    		<input type="text" class="form-control" placeholder="Price" ng-model="order.price">
+					    	</div>
+							<div class="form-group">
+								<label for="">Owner</label>
+							    <input type="text" class="form-control" placeholder="Owner" ng-model="order.owner">
+					  	    </div>
+						  	    <button type="submit" class="btn btn-default" ng-click="add()">Submit</button>
+						</form>
+				</div>
+				<div class="col col-md-6">
+					<h2>Edit Order</h2>
+					<form>
+					  <div class="form-group">
+					    <label for="">Order</label>
+					    <input type="hidden" class="form-control" ng-model="Editorder.id">
+					    <input type="text" class="form-control" placeholder="Order" ng-model="Editorder.name" ng-init="Editorder.name=''">
+					  </div>
+					  <div class="form-group">
+					    <label for="">Price</label>
+					    <input type="text" class="form-control" placeholder="Price" ng-model="Editorder.price">
+					  </div>
+					  <div class="form-group">
+					    <label for="">Owner</label>
+					    <input type="text" class="form-control" placeholder="Owner" ng-model="Editorder.owner">
+					  </div>
+					  <button type="submit" class="btn btn-default" ng-click="update(Editorder.id)">Save</button>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+<script>
+	var myApp = angular.module('ShootingApp', ['ngResource']);
+	myApp.controller('MainController', function($scope,$resource) {
+		var Order = $resource('/api/orders/:order_id',{'order_id' : '@id'},
+		{
+			'delete' : { 'method' :'delete' },
+			update : { method : 'PUT'}
+		})
+
+		$scope.orders = Order.query()  // reload data
+		$scope.Editorder = {}
+
+		$scope.add = function(){
+			Order.save({
+				name : $scope.order.name,
+				price: $scope.order.price,
+				owner : $scope.order.owner
+			})
+			$scope.orders = Order.query()
+		}
+
+		$scope.delete = function(id){
+			Order.delete({'order_id' : id})
+			$scope.orders = Order.query()
+		}
+
+		$scope.isEmpty = function(item){
+			return Object.keys(item).length == 1
+		}
+
+		$scope.edit = function(id){
+			 Order.get({ order_id: id },function(order){
+			 	$scope.Editorder.id = order.id
+		        $scope.Editorder.name = order.name
+		        $scope.Editorder.price = order.price
+		        $scope.Editorder.owner = order.owner
+			 })
+
+			 $scope.editor = true
+		}
+
+		$scope.update = function(id){
+			Order.update({ order_id: id },
+			{
+				name : $scope.Editorder.name,
+				price: $scope.Editorder.price,
+				owner : $scope.Editorder.owner
+			})
+			$scope.orders = Order.query()
+		}
+	});
+</script>
+<div class="col-sm-12" align="center" color="#696969">
+	<br><br><br>
+	<p>Copyright &copy; 2017 <a href="https://www.facebook.com/cronof">NHUM Apinun.K</a> All Rights Reserved and Thank's you</p>
+</div>
+</html>

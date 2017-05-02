@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>SHOOTING Club</title>
+    <link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.min.css">
+    <script src="angular.min.js"></script>
+    <script src="angular-resource.min.js"></script>
+</head>
+<body ng-app="ShootingApp">
+	<div ng-controller="MainController">
+		<div class="container">
+			<div class="row">
+				<h1>~> PSU SHOOTING PHUKET <~</h1>
+				<table class="table table-striped">
+
+					<thead>
+						<tr> <!-- table row -->
+							<th></th><!-- table headder -->
+							<th>Storage</th>
+							<th>Price</th>
+							<th>Owner</th>
+						</tr>
+					</thead>
+
+					<tbody>
+						<tr ng-repeat="order in orders" ng-if="!isEmpty(order)">
+							<td>{{ $index+1 }}</td>
+							<td>{{ order.name }}</td>
+							<td>{{ order.price }}</td>
+							<td>{{ order.owner }}</td>
+
+						</tr>
+					</tbody>
+
+				</table>
+
+				<hr>
+
+				<div class="col col-md-6">
+					<h2>Edit Order</h2>
+					<form>
+					  <div class="form-group">
+					    <label for="">Order</label>
+					    <input type="hidden" class="form-control" ng-model="Editorder.id">
+					    <input type="text" class="form-control" placeholder="Order" ng-model="Editorder.name" ng-init="Editorder.name=''">
+					  </div>
+					  <div class="form-group">
+					    <label for="">Price</label>
+					    <input type="text" class="form-control" placeholder="Price" ng-model="Editorder.price">
+					  </div>
+					  <div class="form-group">
+					    <label for="">Owner</label>
+					    <input type="text" class="form-control" placeholder="Owner" ng-model="Editorder.owner">
+					  </div>
+					  <button type="submit" class="btn btn-default" ng-click="update(Editorder.id)">Save</button>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+<script>
+	var myApp = angular.module('ShootingApp', ['ngResource']);
+	myApp.controller('MainController', function($scope,$resource) {
+		var Order = $resource('/api/orders/:order_id',{'order_id' : '@id'},
+		{
+			'delete' : { 'method' :'delete' },
+			update : { method : 'PUT'}
+		})
+
+		$scope.orders = Order.query()  // reload data
+		$scope.Editorder = {}
+
+
+		$scope.isEmpty = function(item){
+			return Object.keys(item).length == 1
+		}
+
+		$scope.edit = function(id){
+			 Order.get({ order_id: id },function(order){
+			 	$scope.Editorder.id = order.id
+		        $scope.Editorder.name = order.name
+		        $scope.Editorder.price = order.price
+		        $scope.Editorder.owner = order.owner
+			 })
+
+			 $scope.editor = true
+		}
+
+		$scope.update = function(id){
+			Order.update({ order_id: id },
+			{
+				name : $scope.Editorder.name,
+				price: $scope.Editorder.price,
+				owner : $scope.Editorder.owner
+			})
+			$scope.orders = Order.query()
+		}
+	});
+</script>
+</html>

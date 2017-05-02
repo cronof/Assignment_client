@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Book Field</title>
+    <link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.min.css">
+    <script src="angular.min.js"></script>
+    <script src="angular-resource.min.js"></script>
+   
+</head>
+
+
+
+<body ng-app="ShootingApp">
+<header class="navbar navbar-default" role="banner">
+	<div class="container" color="#FFFFFF">
+		<a href="home.html" class="navbar-brand">Home</a>
+		    <ul class="nav navbar-nav navbar-left">
+		    	<li><a href="book.html">Book-Field</a></li> 
+		    	<li><a href="store.html">Storage</a></li>
+			</ul>
+		    <ul class="nav navbar-nav navbar-right">        
+		    	<li><a href="https://www.facebook.com/CRonof">Profile</a></li>
+		  	</ul>
+	</div>
+</header>
+
+	<div ng-controller="MainController">
+		<div class="container">
+			<div class="row">
+				<div class="jumbotron">
+					<h1>BOOK FIELD ~>></h1>
+					
+				</div>
+
+				<hr>
+				<table class="table table-striped">
+
+					<thead>
+						<tr> <!-- table row -->
+							<th></th><!-- table headder -->
+							<th>TEAM</th>
+							<th>Date/Time</th>
+							<th>Tel</th>
+						</tr>
+					</thead>
+
+					<tbody>
+						<tr ng-repeat="order in orders" ng-if="!isEmpty(order)">
+							<td>{{ $index+1 }}</td>
+							<td>{{ project.team }}</td>
+							<td>{{ project.tel }}</td>
+							<td>{{ project.date }}</td>
+							
+							<td><button ng-click="edit(project.id)" class="btn btn-primary">Edit</button>
+								<button ng-click="delete(project.id)" class="btn btn-danger">Delete</button></td>
+						</tr>
+					</tbody>
+
+				</table>
+				<form action="book" method="post">
+				<div class="col col-md-6" >
+					<h2>New Team</h2>
+						
+							<div class="form-group">
+								<label for="">Team:</label>
+					    		<input type="hidden" class="form-control" ng-model="idx">
+					    		<input name="team" type="text" class="form-control" placeholder="Team name" ng-model="project.team" ng-init="project.team">
+							</div>
+							<div class="form-group">
+								<label for="">Tel:</label>
+					    		<input type="hidden" class="form-control" ng-model="idx">
+					    		<input name="tel" type="text" class="form-control" placeholder="Enter No.phone" ng-model="project.tel" ng-init="project.tel">
+							</div>
+							 <div class="form-group">
+				              <label for="">Date/Time</label>
+				              <input type="hidden" class="form-control" ng-model="idx">
+				              <input name="date" type="text" class="form-control" placeholder="Date/Time" ng-model="project.date "/>
+				             </div>
+							</div>
+							<div class="col col-md-6" >
+							<h2>..</h2>
+			  		    	<div class="form-group">
+								<label for="">Name1:</label>
+					    		<input type="hidden" class="form-control" ng-model="idx">
+					    		<input name="name1" type="text" class="form-control" placeholder="Enter Name1" ng-model="project.name">
+							</div>
+			  		    	<div class="form-group">
+								<label for="">Name2:</label>
+					    		<input name="name2" type="text" class="form-control" placeholder="Enter Name2" ng-model="project.name2">
+					    	</div>
+							<div class="form-group">
+								<label for="">Name3:</label>
+							    <input name="name3" type="text" class="form-control" placeholder="Enter Name3" ng-model="project.name3">
+					  	    </div>
+						  	    
+						
+						</div>	
+							<button type="submit" class="btn btn-default" ng-click="add()">Submit</button>
+						</form>
+			</div>
+		</div>
+	</div>
+
+
+</body>
+<script>
+
+
+	var myApp = angular.module('ShootingApp', ['ngResource']);
+	myApp.controller('MainController', function($scope,$resource) {
+		var Project = $resource('/api/projects/:project_id',{'project_id' : '@id'},
+		{
+			'delete' : { 'method' :'delete' },
+			update : { method : 'PUT'}
+		})
+
+		$scope.projects = Project.query()  // reload data
+		$scope.Editproject = {}
+
+		$scope.add = function(){
+			Project.save({
+				Team : $scope.project.team,
+				Tel: $scope.project.tel,
+				DateTime : $scope.project.date,
+				Name1 : $scope.project.name1, 
+				Name2 : $scope.project.name2,
+				Name3 : $scope.project.name3
+			})
+			$scope.projects = Project.query()
+		}
+
+		$scope.delete = function(id){
+			Project.delete({'project_id' : id})
+			$scope.projects = Project.query()
+		}
+
+		$scope.isEmpty = function(item){
+			return Object.keys(item).length == 1
+		}
+
+		$scope.edit = function(id){
+			 Project.get({ project_id: id },function(project){
+			 	$scope.Editproject.id = project.id
+		        $scope.Editproject.team = project.team
+		        $scope.Editproject.tel = project.tel
+		        $scope.Editproject.date = project.date
+		        $scope.Editproject.name1 = project.name1
+		        $scope.Editproject.name2 = project.name2
+		        $scope.Editproject.name3 = project.name3
+			 })
+
+			 $scope.editor = true
+		}
+
+		$scope.update = function(id){
+			Project.update({ project_id: id },
+			{
+				Team : $scope.Editproject.team,
+				Tel: $scope.Editproject.tel,
+				DateTime : $scope.Editproject.date,
+				Name1 : $scope.Editproject.name1, 
+				Name2 : $scope.Editproject.name2,
+				Name3 : $scope.Editproject.name3
+			})
+			$scope.projects = Project.query()
+		}
+	});
+</script>
+
+<div class="col-sm-12" align="center" color="#696969">
+	<br><br><br>
+	<p>Copyright &copy; 2017 <a href="https://www.facebook.com/cronof">NHUM Apinun.K</a> All Rights Reserved and Thank's you</p>
+</div>
+</html>
+

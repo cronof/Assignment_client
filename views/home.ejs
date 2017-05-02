@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>SHOOTING Club</title>
+    <link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.min.css">
+    <script src="angular.min.js"></script>
+    <script src="angular-resource.min.js"></script>
+</head>
+<body ng-app="ShootingApp">
+	<div ng-controller="MainController">
+		<div class="container">
+			<div class="row"><br>
+				<div class="jumbotron">
+					<h1>BB-Gun  ๏̯͡๏ </h1>
+					<h3>~> PSU SHOOTING PHUKET <~</h3>
+				</div>
+				<div class="row">	
+					<div class="col-sm-4"><a href="book.html">
+						<img src="images/place.jpg" class="img-circle" width="300" height="200">
+						<legend><h3>Book-Field</h3></legend></a>
+					</div>
+					<div class="col-sm-4"><a href="store.html">
+						<img src="images/store.jpg" class="img-circle" width="300" height="200">
+						<legend><h3>Gun-Storage</h3></legend></a>
+					</div>
+					<div class="col-sm-4"><a href="https://www.facebook.com/CRonof">
+						<img src="images/contact.jpg" class="img-circle" width="300" height="200">
+						<legend><h3>Contact-us</h3></legend></a>
+					</div>
+					<hr width=100%>
+
+			</div>
+				
+			</div>
+		</div>
+	</div>
+
+<h3>Login As :</h3>
+        <% history.forEach(function(his){ %>
+          <!-- Session ID : <%= his.session_id %> --> <br/>
+          User : <%= his.insign %> <br/>
+          <ul>
+            <% his.time.forEach(function(t){ %>
+              <li>Time : <%= t %> </li>
+            <% }); %>
+          </ul>
+        <% }); %>
+
+<div class="col-sm-12" align="center" color="#696969">
+	<br><br><br><br>
+	<p>Copyright &copy; 2015 <a href="https://www.facebook.com/cronof">NHUM Apinun.K</a> All Rights Reserved and Thank's you</p>
+</div>
+
+
+</body>
+</html>
